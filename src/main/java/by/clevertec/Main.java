@@ -1,6 +1,7 @@
 package by.clevertec;
 
 import by.clevertec.model.Animal;
+import by.clevertec.model.AnimalWrapper;
 import by.clevertec.model.Car;
 import by.clevertec.model.Examination;
 import by.clevertec.model.Flower;
@@ -9,6 +10,7 @@ import by.clevertec.model.Person;
 import by.clevertec.model.Student;
 import by.clevertec.util.Util;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class Main {
@@ -40,8 +42,17 @@ public class Main {
 
     public static void task1() {
         List<Animal> animals = Util.getAnimals();
-//        animals.stream() Продолжить ...
+        animals.stream()
+                .filter(animal -> animal.getAge() > 9 && animal.getAge() < 21)
+                .sorted(Comparator.comparingInt(Animal::getAge))
+                .map(AnimalWrapper::createAnimalWrapper)
+                .filter(animal -> animal.getNumberZoo() == 3)
+                .map(AnimalWrapper::getAnimal)
+                .forEach(System.out::println);
+
+
     }
+
 
     public static void task2() {
         List<Animal> animals = Util.getAnimals();
@@ -50,7 +61,11 @@ public class Main {
 
     public static void task3() {
         List<Animal> animals = Util.getAnimals();
-//        animals.stream() Продолжить ...
+        animals.stream().filter(animal -> animal.getAge() > 30)
+                .map(Animal::getOrigin)
+                .filter(s -> s.startsWith("A"))
+                .distinct()
+                .forEach(System.out::println);
     }
 
     public static void task4() {
