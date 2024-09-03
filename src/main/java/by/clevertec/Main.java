@@ -11,6 +11,7 @@ import by.clevertec.model.Student;
 import by.clevertec.util.TaskUtil;
 import by.clevertec.util.Util;
 
+import java.lang.reflect.Array;
 import java.util.Comparator;
 import java.util.List;
 
@@ -58,7 +59,7 @@ public class Main {
     public static void task2() {
         List<Animal> animals = Util.getAnimals();
         animals.stream()
-                .filter(animal -> animal.getOrigin().equals("Japanese"))
+                .filter(TaskUtil.isOrigin("Japanese"))
                 .peek(animal -> animal.setBread(animal.getBread().toUpperCase()))
                 .forEach(System.out::println);
 //        Отобрать всех животных из Японии (Japanese)
@@ -78,7 +79,7 @@ public class Main {
     public static void task4() {
         List<Animal> animals = Util.getAnimals();
         System.out.println(animals.stream()
-                .filter(animal -> animal.getGender().equals("Female"))
+                .filter(TaskUtil.isFemale)
                 .count());
     }
 
@@ -86,7 +87,7 @@ public class Main {
         List<Animal> animals = Util.getAnimals();
         System.out.println(animals.stream()
                 .filter(animal -> animal.getAge() > 19 && animal.getAge() < 31)
-                .anyMatch(animal -> animal.getOrigin().equals("Hungarian")));
+                .anyMatch(TaskUtil.isOrigin("Hungarian")));
     }
 
     public static void task6() {
@@ -97,27 +98,44 @@ public class Main {
 
     public static void task7() {
         List<Animal> animals = Util.getAnimals();
-//        animals.stream() Продолжить ...
+        System.out.println(animals.stream()
+                .noneMatch(TaskUtil.isOrigin("Oceania")));
     }
 
     public static void task8() {
         List<Animal> animals = Util.getAnimals();
-//        animals.stream() Продолжить ...
+        System.out.println(animals.stream()
+                .sorted(Comparator.comparing(Animal::getBread))
+                .limit(100)
+                .map(Animal::getAge)
+                .reduce(Math::max)
+                .orElseThrow());
     }
 
     public static void task9() {
         List<Animal> animals = Util.getAnimals();
-//        animals.stream() Продолжить ...
+        System.out.println(animals.stream()
+                .map(Animal::getBread)
+                .map(String::toCharArray)
+                .min(Comparator.comparing(Array::getLength))
+                .orElseThrow()
+                .length);
     }
 
     public static void task10() {
         List<Animal> animals = Util.getAnimals();
-//        animals.stream() Продолжить ...
+        System.out.println(animals.stream()
+                .mapToInt(Animal::getAge)
+                .sum());
     }
 
     public static void task11() {
         List<Animal> animals = Util.getAnimals();
-//        animals.stream() Продолжить ...
+        System.out.println(animals.stream()
+                .filter(TaskUtil.isOrigin("Indonesian"))
+                .mapToInt(Animal::getAge)
+                .average()
+                .orElseThrow());
     }
 
     public static void task12() {
