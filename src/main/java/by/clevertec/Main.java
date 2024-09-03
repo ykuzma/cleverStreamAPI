@@ -8,6 +8,7 @@ import by.clevertec.model.Flower;
 import by.clevertec.model.House;
 import by.clevertec.model.Person;
 import by.clevertec.model.Student;
+import by.clevertec.util.TaskUtil;
 import by.clevertec.util.Util;
 
 import java.util.Comparator;
@@ -56,7 +57,13 @@ public class Main {
 
     public static void task2() {
         List<Animal> animals = Util.getAnimals();
-//        animals.stream() Продолжить ...
+        animals.stream()
+                .filter(animal -> animal.getOrigin().equals("Japanese"))
+                .peek(animal -> animal.setBread(animal.getBread().toUpperCase()))
+                .forEach(System.out::println);
+//        Отобрать всех животных из Японии (Japanese)
+//        и записать породу UPPER_CASE в если пол Female
+//        преобразовать к строкам породы животных и вывести в консоль
     }
 
     public static void task3() {
@@ -70,17 +77,22 @@ public class Main {
 
     public static void task4() {
         List<Animal> animals = Util.getAnimals();
-//        animals.stream() Продолжить ...
+        System.out.println(animals.stream()
+                .filter(animal -> animal.getGender().equals("Female"))
+                .count());
     }
 
     public static void task5() {
         List<Animal> animals = Util.getAnimals();
-//        animals.stream() Продолжить ...
+        System.out.println(animals.stream()
+                .filter(animal -> animal.getAge() > 19 && animal.getAge() < 31)
+                .anyMatch(animal -> animal.getOrigin().equals("Hungarian")));
     }
 
     public static void task6() {
         List<Animal> animals = Util.getAnimals();
-//        animals.stream() Продолжить ...
+        System.out.println(animals.stream()
+                .allMatch(TaskUtil.isFemale.or(TaskUtil.isMale)));
     }
 
     public static void task7() {
