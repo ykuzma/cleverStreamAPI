@@ -7,7 +7,9 @@ import by.clevertec.model.Examination;
 import by.clevertec.model.Flower;
 import by.clevertec.model.House;
 import by.clevertec.model.Person;
+import by.clevertec.model.PersonWithRangeEvacuation;
 import by.clevertec.model.Student;
+import by.clevertec.util.EvacuationRank;
 import by.clevertec.util.TaskUtil;
 import by.clevertec.util.Util;
 
@@ -18,7 +20,7 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        task1();
+      /*  task1();
         task2();
         task3();
         task4();
@@ -29,7 +31,7 @@ public class Main {
         task9();
         task10();
         task11();
-        task12();
+        task12();*/
         task13();
         task14();
         task15();
@@ -150,7 +152,12 @@ public class Main {
 
     public static void task13() {
         List<House> houses = Util.getHouses();
-        houses.stream() Продолжить ...
+        houses.stream()
+                .flatMap(TaskUtil.houseToPerson)
+                .sorted(Comparator.comparing(EvacuationRank::getRank))
+                .limit(50)
+                .map(PersonWithRangeEvacuation::getPerson)
+                .forEach(System.out::println);
     }
 
     public static void task14() {

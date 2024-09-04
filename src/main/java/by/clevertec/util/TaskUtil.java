@@ -1,12 +1,16 @@
 package by.clevertec.util;
 
 import by.clevertec.model.Animal;
+import by.clevertec.model.House;
 import by.clevertec.model.Person;
+import by.clevertec.model.PersonWithRangeEvacuation;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 public class TaskUtil {
 
@@ -25,5 +29,11 @@ public class TaskUtil {
    public static Predicate<Person> isAgeYounger(int age) {
       return person ->  Period.between(person.getDateOfBirth(), LocalDate.now()).getYears() <= age;
    }
+
+   public static Function<House, Stream<PersonWithRangeEvacuation>> houseToPerson = house -> {
+      boolean isInHospital = house.getBuildingType().equals("Hospital");
+      return house.getPersonList().stream()
+              .map(person -> new PersonWithRangeEvacuation(person, isInHospital));
+   };
 
 }
