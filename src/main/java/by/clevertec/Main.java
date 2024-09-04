@@ -140,12 +140,17 @@ public class Main {
 
     public static void task12() {
         List<Person> persons = Util.getPersons();
-//        persons.stream() Продолжить ...
+        persons.stream()
+                .filter(person -> !person.getGender().equals("Female"))
+                .filter(TaskUtil.isAgeOlder(18).and(TaskUtil.isAgeYounger(27)))
+                .sorted(Comparator.comparingInt(Person::getRecruitmentGroup))
+                .limit(200)
+                .forEach(System.out::println);
     }
 
     public static void task13() {
         List<House> houses = Util.getHouses();
-//        houses.stream() Продолжить ...
+        houses.stream() Продолжить ...
     }
 
     public static void task14() {
