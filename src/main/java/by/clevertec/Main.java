@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 public class Main {
 
     public static void main(String[] args) {
-      /*  task1();
+        task1();
         task2();
         task3();
         task4();
@@ -34,7 +34,7 @@ public class Main {
         task9();
         task10();
         task11();
-        task12();*/
+        task12();
         task13();
         task14();
         task15();
@@ -66,6 +66,8 @@ public class Main {
         animals.stream()
                 .filter(TaskUtil.isOrigin("Japanese"))
                 .peek(animal -> animal.setBread(animal.getBread().toUpperCase()))
+                .filter(TaskUtil.isFemale)
+                .map(Animal::getBread)
                 .forEach(System.out::println);
 //        Отобрать всех животных из Японии (Japanese)
 //        и записать породу UPPER_CASE в если пол Female
@@ -204,16 +206,42 @@ public class Main {
 
     public static void task20() {
         List<Student> students = Util.getStudents();
-//        students.stream() Продолжить ...
+        List<Examination> examinations = Util.getExaminations();
+        students.stream()
+                .limit(20)
+                .collect(
+                       Collectors.groupingBy(
+                               Student::getFaculty,
+                               Collectors.mapping(
+                                       TaskUtil.mapStudentToExam(Util.getExaminations()),
+                                       Collectors.toList()
+                               )
+                       )
+                );
     }
 
     public static void task21() {
         List<Student> students = Util.getStudents();
-//        students.stream() Продолжить ...
+        System.out.println(students.stream()
+                .collect(
+                        Collectors.groupingBy(
+                                Student::getGroup,
+                                Collectors.counting()
+                        )
+                ));
     }
 
     public static void task22() {
         List<Student> students = Util.getStudents();
-//        students.stream() Продолжить ...
+        System.out.println(students.stream()
+                .collect(
+                        Collectors.groupingBy(
+                                Student::getFaculty,
+                                Collectors.mapping(
+                                        Student::getAge,
+                                        Collectors.minBy(Comparator.naturalOrder())
+                                )
+                        )
+                ));
     }
 }
