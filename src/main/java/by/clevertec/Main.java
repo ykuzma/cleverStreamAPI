@@ -16,6 +16,9 @@ import by.clevertec.util.Util;
 import java.lang.reflect.Array;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 public class Main {
 
@@ -177,13 +180,21 @@ public class Main {
 
     public static void task17() {
         List<Student> students = Util.getStudents();
-//        students.stream() Продолжить ...
+        students.stream()
+                .map(Student::getGroup)
+                .distinct()
+                .forEach(System.out::println);
     }
 
     public static void task18() {
         List<Student> students = Util.getStudents();
-        List<Examination> examinations = Util.getExaminations();
-//        students.stream() Продолжить ...
+        Integer collect = students.stream()
+                .collect(Collectors.collectingAndThen(
+                        Collectors.groupingBy(
+                                Student::getFaculty,
+                                Collectors.averagingDouble(Student::getAge)
+                        ), Map::size));
+        System.out.println(collect);
     }
 
     public static void task19() {
