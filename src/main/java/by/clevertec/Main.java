@@ -3,6 +3,7 @@ package by.clevertec;
 import by.clevertec.model.Animal;
 import by.clevertec.model.AnimalWrapper;
 import by.clevertec.model.Car;
+import by.clevertec.model.CarWrapper;
 import by.clevertec.model.Examination;
 import by.clevertec.model.Flower;
 import by.clevertec.model.House;
@@ -10,6 +11,7 @@ import by.clevertec.model.Person;
 import by.clevertec.model.PersonWithRangeEvacuation;
 import by.clevertec.model.Student;
 import by.clevertec.util.EvacuationRank;
+import by.clevertec.util.LogisticIndex;
 import by.clevertec.util.TaskUtil;
 import by.clevertec.util.Util;
 
@@ -17,7 +19,6 @@ import java.lang.reflect.Array;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -115,7 +116,7 @@ public class Main {
                 .sorted(Comparator.comparing(Animal::getBread))
                 .limit(100)
                 .map(Animal::getAge)
-                .reduce(Math::max)
+                .max(Comparator.naturalOrder())
                 .orElseThrow());
     }
 
@@ -148,7 +149,7 @@ public class Main {
     public static void task12() {
         List<Person> persons = Util.getPersons();
         persons.stream()
-                .filter(person -> !person.getGender().equals("Female"))
+                .filter(person -> person.getGender().equals("Male"))
                 .filter(TaskUtil.isAgeOlder(18).and(TaskUtil.isAgeYounger(27)))
                 .sorted(Comparator.comparingInt(Person::getRecruitmentGroup))
                 .limit(200)
@@ -167,7 +168,12 @@ public class Main {
 
     public static void task14() {
         List<Car> cars = Util.getCars();
-//        cars.stream() Продолжить ...
+        cars.stream()
+                .limit(50)
+                .map(CarWrapper::new)
+                .filter(index -> index.getIndex() < 6)
+                .sorted(Comparator.comparingInt(LogisticIndex::getIndex))
+                .forEach(System.out::println);
     }
 
     public static void task15() {
@@ -177,7 +183,11 @@ public class Main {
 
     public static void task16() {
         List<Student> students = Util.getStudents();
-//        students.stream() Продолжить ...
+       students.stream()
+                .filter(s -> s.getAge() < 19)
+                .sorted(Comparator.comparing(Student::getSurname))
+                .forEach(n -> System.out.printf("%s - %s%n", n.getSurname(), n.getAge()));
+
     }
 
     public static void task17() {
