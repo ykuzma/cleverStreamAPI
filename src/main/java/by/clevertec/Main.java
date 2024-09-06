@@ -10,6 +10,7 @@ import by.clevertec.model.House;
 import by.clevertec.model.Person;
 import by.clevertec.model.PersonWithRangeEvacuation;
 import by.clevertec.model.Student;
+import by.clevertec.util.Country;
 import by.clevertec.util.EvacuationRank;
 import by.clevertec.util.LogisticIndex;
 import by.clevertec.util.TaskUtil;
@@ -169,16 +170,25 @@ public class Main {
     public static void task14() {
         List<Car> cars = Util.getCars();
         cars.stream()
-                .limit(50)
+                .limit(300)
                 .map(CarWrapper::new)
                 .filter(index -> index.getIndex() < 6)
                 .sorted(Comparator.comparingInt(LogisticIndex::getIndex))
-                .forEach(System.out::println);
+                .collect(
+                        Collectors.groupingBy(
+                                s -> Country.values()[s.getIndex()],
+                                Collectors.mapping(
+                                        s -> s.getCar().getMass() * 7.14,
+                                        Collectors.summingDouble(Double::doubleValue)
+                                )
+                        )
+                );
     }
 
     public static void task15() {
         List<Flower> flowers = Util.getFlowers();
-//        flowers.stream() Продолжить ...
+        flowers.stream()
+                .
     }
 
     public static void task16() {
