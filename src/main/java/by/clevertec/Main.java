@@ -12,6 +12,7 @@ import by.clevertec.model.PersonWithRangeEvacuation;
 import by.clevertec.model.Student;
 import by.clevertec.util.Country;
 import by.clevertec.util.EvacuationRank;
+import by.clevertec.util.FlowerComparator;
 import by.clevertec.util.LogisticIndex;
 import by.clevertec.util.TaskUtil;
 import by.clevertec.util.Util;
@@ -21,6 +22,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import static by.clevertec.util.TaskUtil.isVaseMaterialSuitable;
+import static by.clevertec.util.TaskUtil.mappingFlowersInServiceCost;
 
 public class Main {
 
@@ -188,12 +192,19 @@ public class Main {
     public static void task15() {
         List<Flower> flowers = Util.getFlowers();
         flowers.stream()
-                .
+                .limit(100)
+                .sorted(new FlowerComparator())
+                .filter(flower -> flower.getCommonName().toCharArray()[0] >= 'C')
+                .filter(flower -> flower.getCommonName().toCharArray()[0] <= 'S')
+                .filter(Flower::isShadePreferred)
+                .filter(isVaseMaterialSuitable())
+                .mapToDouble(mappingFlowersInServiceCost(1.39, 5))
+                .sum();
     }
 
     public static void task16() {
         List<Student> students = Util.getStudents();
-       students.stream()
+        students.stream()
                 .filter(s -> s.getAge() < 19)
                 .sorted(Comparator.comparing(Student::getSurname))
                 .forEach(n -> System.out.printf("%s - %s%n", n.getSurname(), n.getAge()));
@@ -230,13 +241,13 @@ public class Main {
         students.stream()
                 .limit(20)
                 .collect(
-                       Collectors.groupingBy(
-                               Student::getFaculty,
-                               Collectors.mapping(
-                                       TaskUtil.mapStudentToExam(Util.getExaminations()),
-                                       Collectors.toList()
-                               )
-                       )
+                        Collectors.groupingBy(
+                                Student::getFaculty,
+                                Collectors.mapping(
+                                        TaskUtil.mapStudentToExam(Util.getExaminations()),
+                                        Collectors.toList()
+                                )
+                        )
                 );
     }
 

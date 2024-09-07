@@ -2,6 +2,7 @@ package by.clevertec.util;
 
 import by.clevertec.model.Animal;
 import by.clevertec.model.Examination;
+import by.clevertec.model.Flower;
 import by.clevertec.model.House;
 import by.clevertec.model.Person;
 import by.clevertec.model.PersonWithRangeEvacuation;
@@ -11,13 +12,18 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
+import java.util.function.ToDoubleFunction;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class TaskUtil {
+
+    private static final int DAY_IN_YEAR = 365;
+
 
     public static Supplier<String> orElse = () -> "Empty Stream";
 
@@ -53,6 +59,17 @@ public class TaskUtil {
         };
     }
 
+    public static Predicate<Flower> isVaseMaterialSuitable() {
+        return flower -> flower.getFlowerVaseMaterial().stream()
+                .anyMatch(s -> Set.of("Aluminum", "Steel", "Glass").contains(s));
+    }
 
+    public static ToDoubleFunction<Flower> mappingFlowersInServiceCost(double costWater, int years) {
+        return flower -> flower.getPrice() + costOfService(costWater, years);
+    }
+
+    private static double costOfService(double costWater, int years) {
+        return DAY_IN_YEAR * years * costWater / 1000;
+    }
 
 }
