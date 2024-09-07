@@ -23,7 +23,7 @@ public class PersonWithRangeEvacuation implements EvacuationRank {
     public int getRank() {
         int rank = 0;
         if(!isInHospital()) rank += 2;
-        if(getAge() < 61 && getAge() > 17) rank += 1;
+        if(getAge() < TaskUtil.getPensionAge() && getAge() > 17) rank += 1;
         return rank;
     }
 

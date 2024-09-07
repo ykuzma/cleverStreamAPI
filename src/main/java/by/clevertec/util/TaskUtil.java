@@ -23,7 +23,11 @@ import java.util.stream.Stream;
 public class TaskUtil {
 
     private static final int DAY_IN_YEAR = 365;
+    private static int PENSION_AGE = 60;
 
+    public static int getPensionAge(){
+        return PENSION_AGE;
+    }
 
     public static Supplier<String> orElse = () -> "Empty Stream";
 

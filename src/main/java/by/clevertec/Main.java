@@ -41,7 +41,7 @@ public class Main {
         task10();
         task11();
         task12();
-        task13();
+        task13(Util.getHouses());
         task14();
         task15();
         task16();
@@ -159,14 +159,15 @@ public class Main {
                 .forEach(System.out::println);
     }
 
-    public static void task13() {
-        List<House> houses = Util.getHouses();
-        houses.stream()
+    public static List<Person> task13(List<House> houses) {
+
+        return houses.stream()
                 .flatMap(TaskUtil.houseToPerson)
                 .sorted(Comparator.comparing(EvacuationRank::getRank))
                 .limit(50)
                 .map(PersonWithRangeEvacuation::getPerson)
-                .forEach(System.out::println);
+                .peek(System.out::println)
+                .toList();
     }
 
     public static void task14() {

@@ -15,8 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UtilsTest {
-    private static final String TEST_TASK2 = "src/test/resources/json/TestTask2.json";
-    private static final String RECRUITS_DATA_FILE = "src/test/resources/json/recruits.json";
+    private static final String ANIMALS_TEST = "src/test/resources/json/AnimalsTest.json";
+    private static final String RECRUITS_TEST = "src/test/resources/json/recruitsTest.json";
     private static final String CARS_DATA_FILE = "src/test/resources/json/cars.json";
     private static final String FLOWERS_DATA_FILE = "src/test/resources/json/flowers.json";
     private static final String STUDENTS_DATA_FILE = "src/test/resources/json/students.json";
@@ -27,7 +27,7 @@ public class UtilsTest {
     private static final Reader reader = new JsonReader();
 
     public static List<List<Animal>> getAnimals() {
-        List<Animal> animals = reader.getModelData(TEST_TASK2, new TypeReference<>() {
+        List<Animal> animals = reader.getModelData(ANIMALS_TEST, new TypeReference<>() {
         });
         return List.of(
                 new ArrayList<>(animals.subList(0,3)),
@@ -38,8 +38,9 @@ public class UtilsTest {
     }
 
     public static List<Person> getPersons() {
-        return reader.getModelData(RECRUITS_DATA_FILE, new TypeReference<>() {
+        return reader.getModelData(RECRUITS_TEST, new TypeReference<>() {
         });
+
     }
 
     public static List<Car> getCars() {
