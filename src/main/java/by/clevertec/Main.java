@@ -18,6 +18,7 @@ import by.clevertec.util.TaskUtil;
 import by.clevertec.util.Util;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +31,7 @@ public class Main {
 
     public static void main(String[] args) {
         task1();
-        task2();
+        task2(Util.getAnimals());
         task3();
         task4();
         task5();
@@ -67,17 +68,14 @@ public class Main {
     }
 
 
-    public static void task2() {
-        List<Animal> animals = Util.getAnimals();
-        animals.stream()
+    public static List<String> task2(List<Animal> animals) {
+        return animals.stream()
                 .filter(TaskUtil.isOrigin("Japanese"))
                 .peek(animal -> animal.setBread(animal.getBread().toUpperCase()))
                 .filter(TaskUtil.isFemale)
                 .map(Animal::getBread)
-                .forEach(System.out::println);
-//        Отобрать всех животных из Японии (Japanese)
-//        и записать породу UPPER_CASE в если пол Female
-//        преобразовать к строкам породы животных и вывести в консоль
+                .peek(System.out::println)
+                .toList();
     }
 
     public static void task3() {
