@@ -18,7 +18,6 @@ import by.clevertec.util.TaskUtil;
 import by.clevertec.util.Util;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +32,7 @@ public class Main {
         task1();
         task2(Util.getAnimals());
         task3();
-        task4();
+        task4(Util.getAnimals());
         task5();
         task6();
         task7();
@@ -87,11 +86,12 @@ public class Main {
                 .forEach(System.out::println);
     }
 
-    public static void task4() {
-        List<Animal> animals = Util.getAnimals();
-        System.out.println(animals.stream()
+    public static long task4(List<Animal> animals) {
+        long count = animals.stream()
                 .filter(TaskUtil.isFemale)
-                .count());
+                .count();
+        System.out.println(count);
+        return count;
     }
 
     public static void task5() {

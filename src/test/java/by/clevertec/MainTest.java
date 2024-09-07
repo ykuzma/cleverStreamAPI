@@ -10,13 +10,14 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static by.clevertec.Main.task2;
+import static by.clevertec.Main.task4;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
  class MainTest {
 
     @ParameterizedTest
-    @MethodSource("provideTestTask2Arguments")
+    @MethodSource("provideTestTask2StartedAndExpectedList")
     void testTask2_resultListEqualsExpected(List<Animal> animals, List<String> expected) {
 
        List<String> result = task2(animals);
@@ -29,7 +30,7 @@ import static org.assertj.core.api.Assertions.assertThat;
      void testTask2_resultListSizeEqualsExpected() {
          List<Animal> animals = UtilsTest.getAnimals().get(2);
 
-         Integer result = task2(animals).size();
+         Integer result =  task2(animals).size();
 
          assertThat(result).isEqualTo(2);
      }
@@ -44,12 +45,33 @@ import static org.assertj.core.api.Assertions.assertThat;
                  .allMatch(s -> s.equals(s.toUpperCase()))).isTrue();
      }
 
-     private static Stream<Arguments> provideTestTask2Arguments() {
+     @ParameterizedTest
+     @MethodSource("provideStartListAndExpectedCount")
+     void testTask4_countEqualsExpected(List<Animal> animals, long expected) {
+
+         Long count = task4(animals);
+
+         assertThat(count).isEqualTo(expected);
+     }
+
+
+
+     private static Stream<Arguments> provideTestTask2StartedAndExpectedList() {
         List<List<Animal>> animals = UtilsTest.getAnimals();
          return Stream.of(
                  Arguments.of(animals.get(0), List.of("JF")),
                  Arguments.of(animals.get(1), List.of()),
                  Arguments.of(animals.get(2), List.of("JF", "JF"))
+         );
+     }
+
+     private static Stream<Arguments> provideStartListAndExpectedCount() {
+         List<List<Animal>> animals = UtilsTest.getAnimals();
+         return Stream.of(
+                 Arguments.of(animals.get(0), 1),
+                 Arguments.of(animals.get(1), 1),
+                 Arguments.of(animals.get(2), 4),
+                 Arguments.of(animals.get(3), 0)
          );
      }
 

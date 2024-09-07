@@ -32,7 +32,8 @@ public class UtilsTest {
         return List.of(
                 new ArrayList<>(animals.subList(0,3)),
                 new ArrayList<>(animals.subList(3,6)),
-                new ArrayList<>(animals.subList(0, 9))
+                new ArrayList<>(animals.subList(0, 9)),
+                new ArrayList<>(animals.subList(0, 2))
         );
     }
 
