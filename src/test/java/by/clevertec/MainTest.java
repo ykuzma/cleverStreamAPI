@@ -11,6 +11,7 @@ import by.clevertec.model.Student;
 import by.clevertec.util.EvacuationRank;
 import by.clevertec.util.FlowerComparator;
 import by.clevertec.util.TaskUtil;
+import by.clevertec.util.Util;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -31,9 +32,12 @@ import static by.clevertec.Main.task14;
 import static by.clevertec.Main.task15;
 import static by.clevertec.Main.task19;
 import static by.clevertec.Main.task2;
+import static by.clevertec.Main.task20;
 import static by.clevertec.Main.task21;
 import static by.clevertec.Main.task4;
 import static by.clevertec.Main.task5;
+import static by.clevertec.util.TaskUtil.getCollector;
+import static by.clevertec.util.TaskUtil.mappingExaminationByStudentID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.offset;
 
@@ -120,10 +124,10 @@ class MainTest {
     }
 
     @Nested
-    class Task12{
+    class Task12 {
         @ParameterizedTest
         @MethodSource("providePersons")
-        void GivenPersons_WhenFiltered_ThenListContainsOnlyMale(List<Person>persons) {
+        void GivenPersons_WhenFiltered_ThenListContainsOnlyMale(List<Person> persons) {
 
             List<Person> actualPersons = task12(persons);
 
@@ -135,7 +139,7 @@ class MainTest {
 
         @ParameterizedTest
         @MethodSource("providePersons")
-        void GivenPersons_WhenFiltered_ThenListContainsOnlyAgeBetween18and27(List<Person>persons) {
+        void GivenPersons_WhenFiltered_ThenListContainsOnlyAgeBetween18and27(List<Person> persons) {
 
             List<Person> actualPersons = task12(persons);
 
@@ -148,53 +152,53 @@ class MainTest {
         private static Stream<Arguments> providePersons() {
             List<Person> persons = UtilsTest.getPersons();
             return Stream.of(
-                    Arguments.of(persons.subList(3,6), 0),
-                    Arguments.of(persons.subList(6,9), 0),
-                    Arguments.of(persons.subList(9,12), 0),
-                    Arguments.of(persons.subList(3,15), 3)
+                    Arguments.of(persons.subList(3, 6), 0),
+                    Arguments.of(persons.subList(6, 9), 0),
+                    Arguments.of(persons.subList(9, 12), 0),
+                    Arguments.of(persons.subList(3, 15), 3)
             );
         }
     }
 
     @Nested
-    class Task13{
+    class Task13 {
         @Test
-        void testTask13_GivenListHouses_WhenUsedStream_ThenSortedListPerson () {
-        List<Person> persons = UtilsTest.getPersons();
-        List<House> houses = List.of(
-                new House(1, "Civil building", persons.subList(0, 1)),
-                new House(2, "Civil building", persons.subList(1, 2)),
-                new House(3, "Hospital", persons.subList(2, 3))
-        );
-        List<Person> expected = List.of(
-                persons.get(2),
-                persons.get(1),
-                persons.get(0)
-        );
+        void testTask13_GivenListHouses_WhenUsedStream_ThenSortedListPerson() {
+            List<Person> persons = UtilsTest.getPersons();
+            List<House> houses = List.of(
+                    new House(1, "Civil building", persons.subList(0, 1)),
+                    new House(2, "Civil building", persons.subList(1, 2)),
+                    new House(3, "Hospital", persons.subList(2, 3))
+            );
+            List<Person> expected = List.of(
+                    persons.get(2),
+                    persons.get(1),
+                    persons.get(0)
+            );
 
-        List<Person> actual = task13(houses);
+            List<Person> actual = task13(houses);
 
-        assertThat(actual).isEqualTo(expected);
-    }
+            assertThat(actual).isEqualTo(expected);
+        }
 
         @ParameterizedTest
         @MethodSource("provideTestTask13EvacuationRankAndExpectedValue")
-        void testTask13_GivenEvacuationRank_WhenGetRank_ThenIntEqualsExpected (EvacuationRank wrapper,int expected){
+        void testTask13_GivenEvacuationRank_WhenGetRank_ThenIntEqualsExpected(EvacuationRank wrapper, int expected) {
 
-        int actual = wrapper.getRank();
+            int actual = wrapper.getRank();
 
-        assertThat(actual).isEqualTo(expected);
-    }
+            assertThat(actual).isEqualTo(expected);
+        }
 
-        private static Stream<Arguments> provideTestTask13EvacuationRankAndExpectedValue () {
-        List<Person> persons = UtilsTest.getPersons();
-        return Stream.of(
-                Arguments.of(new PersonWithRangeEvacuation(persons.get(29), false), 2),
-                Arguments.of(new PersonWithRangeEvacuation(persons.get(3), true), 1),
-                Arguments.of(new PersonWithRangeEvacuation(persons.get(11), true), 0),
-                Arguments.of(new PersonWithRangeEvacuation(persons.get(5), false), 3)
-        );
-    }
+        private static Stream<Arguments> provideTestTask13EvacuationRankAndExpectedValue() {
+            List<Person> persons = UtilsTest.getPersons();
+            return Stream.of(
+                    Arguments.of(new PersonWithRangeEvacuation(persons.get(29), false), 2),
+                    Arguments.of(new PersonWithRangeEvacuation(persons.get(3), true), 1),
+                    Arguments.of(new PersonWithRangeEvacuation(persons.get(11), true), 0),
+                    Arguments.of(new PersonWithRangeEvacuation(persons.get(5), false), 3)
+            );
+        }
     }
 
     @Nested
@@ -295,21 +299,21 @@ class MainTest {
     }
 
     @Nested
-    class Task19{
+    class Task19 {
         @ParameterizedTest
         @MethodSource("providedStudentsAndGroup")
-        void GivenNotEmptyStudents_WhenTask19_ThenAllGroupMatchExpected (List<Student> students, String group) throws IOException {
-        BufferedReader br = Mockito.mock(BufferedReader.class);
-        Mockito.when(br.readLine()).thenReturn(group);
+        void GivenNotEmptyStudents_WhenTask19_ThenAllGroupMatchExpected(List<Student> students, String group) throws IOException {
+            BufferedReader br = Mockito.mock(BufferedReader.class);
+            Mockito.when(br.readLine()).thenReturn(group);
 
-        List<Student> actualStudents = task19(students, br);
+            List<Student> actualStudents = task19(students, br);
 
-        assertThat(actualStudents).isNotEmpty().extracting(Student::getGroup).allMatch(s -> s.equals(group));
-    }
+            assertThat(actualStudents).isNotEmpty().extracting(Student::getGroup).allMatch(s -> s.equals(group));
+        }
 
         @ParameterizedTest
         @MethodSource("providedStudentsAndGroupAndSize")
-        void GivenStudents_WhenTask19_ThenSizeEqualsExpected (List<Student> students, String group, int sizeExpected) throws IOException {
+        void GivenStudents_WhenTask19_ThenSizeEqualsExpected(List<Student> students, String group, int sizeExpected) throws IOException {
             BufferedReader br = Mockito.mock(BufferedReader.class);
             Mockito.when(br.readLine()).thenReturn(group);
 
@@ -340,8 +344,53 @@ class MainTest {
             );
         }
     }
-    @Test
-    void GivenStudents_WhenUsedTask21_ThenMapEqualsExpected() {
+
+    @Nested
+    class Task20 {
+
+        @Test
+        void GivenStudents_WhenUsedGetCollector_ThenAverageScoreByFacultyEqualsExpected() {
+            List<Student> students = UtilsTest.getStudents().get(0);
+            Map<String, Double> expected = Map.of(
+                    "Physics", 8d,
+                    "ComputerScience", 7.5d,
+                    "Mathematics", 9.5d,
+                    "Chemistry", 9d
+
+            );
+
+            Map<String, Double> actual = students.stream()
+                    .collect(getCollector(mappingExaminationByStudentID(Util.getExaminations())));
+
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        @ParameterizedTest
+        @MethodSource("providedStudents")
+        void GivenStudents_WhenTask20_ThenFacultyWithMaxAverageScoreEqualsExpected(List<Student> students, String expectedFaculty) {
+
+            String actualFaculty = task20(students);
+
+            assertThat(actualFaculty).isEqualTo(expectedFaculty);
+
+        }
+
+        private static Stream<Arguments> providedStudents() {
+            List<List<Student>> students = UtilsTest.getStudents();
+            return Stream.of(
+                    Arguments.of(students.get(0), "Mathematics"),
+                    Arguments.of(students.get(2), "ComputerScience"),
+                    Arguments.of(students.get(3), "Mathematics")
+
+            );
+        }
+    }
+
+
+    @Nested
+    class Task21{
+        @Test
+        void GivenStudents_WhenUsedTask21_ThenMapEqualsExpected () {
         List<Student> students = UtilsTest.getStudents().get(0);
         Map<String, Long> expected = Map.of(
                 "M-1", 2L,
@@ -352,6 +401,7 @@ class MainTest {
         Map<String, Long> countingStudentsByGroup = task21(students);
 
         assertThat(countingStudentsByGroup).isEqualTo(expected);
+    }
     }
 
 

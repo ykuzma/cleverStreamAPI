@@ -11,12 +11,15 @@ import by.clevertec.model.Student;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.ToDoubleFunction;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -119,5 +122,24 @@ public class TaskUtil {
                 return false;
             }
         };
+    }
+    private Comparator<Map.Entry<String, Double>> valueComparator = (a,b) -> a.getValue().compareTo(b.getValue());
+
+    public static Function<Map<String, Double>, String> getFacultyWithMaxAverageScore(){
+        return m ->  m.entrySet().stream()
+                    .max(Map.Entry.comparingByValue())
+                    .orElseThrow().getKey();
+
+
+    }
+
+    public static Collector<Student, ?, Map<String, Double>> getCollector(Map<Integer, Examination> examinations) {
+        return Collectors.groupingBy(
+                Student::getFaculty,
+                Collectors.mapping(
+                        mapStudentToExam(examinations),
+                        Collectors.averagingDouble(Integer::doubleValue)
+                )
+        );
     }
 }

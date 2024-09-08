@@ -20,13 +20,14 @@ import by.clevertec.util.Util;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.lang.reflect.Array;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static by.clevertec.util.TaskUtil.getCollector;
+import static by.clevertec.util.TaskUtil.getFacultyWithMaxAverageScore;
 import static by.clevertec.util.TaskUtil.houseToPerson;
 import static by.clevertec.util.TaskUtil.isFemale;
 import static by.clevertec.util.TaskUtil.isMale;
@@ -59,8 +60,8 @@ public class Main {
         task16();
         task17();
         task18();
-        task19(Util.getStudents(), new BufferedReader(new InputStreamReader(System.in)));
-        task20();
+      /*  task19(Util.getStudents(), new BufferedReader(new InputStreamReader(System.in)));*/
+        task20(Util.getStudents());
         task21(Util.getStudents());
         task22();
     }
@@ -257,18 +258,15 @@ public class Main {
         }
     }
 
-    public static void task20() {
-        List<Student> students = Util.getStudents();
+    public static String task20(List<Student> students) {
+
         Map<Integer, Examination> examinations = mappingExaminationByStudentID(Util.getExaminations());
-        students.stream()
+        return students.stream()
                 .limit(20)
                 .collect(
-                        Collectors.groupingBy(
-                                Student::getFaculty,
-                                Collectors.mapping(
-                                        TaskUtil.mapStudentToExam(examinations),
-                                        Collectors.averagingDouble(Integer::doubleValue)
-                                )
+                        Collectors.collectingAndThen(
+                                getCollector(examinations),
+                                getFacultyWithMaxAverageScore()
                         )
                 );
     }

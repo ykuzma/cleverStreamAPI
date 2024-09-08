@@ -77,7 +77,9 @@ public class UtilsTest {
         });
         return List.of(
                 students.subList(0, 6),
-                students.subList(0, 25)
+                students.subList(0, 25),
+                students.subList(6,12),
+                students.subList(12, 18)
         );
     }
 
