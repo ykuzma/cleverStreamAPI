@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 
 import static by.clevertec.util.TaskUtil.isVaseMaterialSuitable;
 import static by.clevertec.util.TaskUtil.mappingFlowersInServiceCost;
+import static by.clevertec.util.TaskUtil.profitCalculationLogisticCompany;
 
 public class Main {
 
@@ -42,7 +43,7 @@ public class Main {
         task11();
         task12();
         task13(Util.getHouses());
-        task14();
+        task14(Util.getCars());
         task15(Util.getFlowers());
         task16();
         task17();
@@ -170,20 +171,20 @@ public class Main {
                 .toList();
     }
 
-    public static void task14() {
-        List<Car> cars = Util.getCars();
-        cars.stream()
+    public static double task14(List<Car> cars) {
+        return cars.stream()
                 .limit(300)
                 .map(CarWrapper::new)
                 .filter(index -> index.getIndex() < 6)
                 .sorted(Comparator.comparingInt(LogisticIndex::getIndex))
                 .collect(
-                        Collectors.groupingBy(
-                                s -> Country.values()[s.getIndex()],
-                                Collectors.mapping(
-                                        s -> s.getCar().getMass() * 7.14 / 1000,
-                                        Collectors.summingDouble(Double::doubleValue)
-                                )
+                        Collectors.collectingAndThen(
+                                Collectors.groupingBy(
+                                        s -> Country.values()[s.getIndex()],
+                                        Collectors.mapping(
+                                                s -> s.getCar().getMass() * 7.14 / 1000,
+                                                Collectors.summingDouble(Double::doubleValue)
+                                        )), profitCalculationLogisticCompany()
                         )
                 );
     }

@@ -43,7 +43,7 @@ public class CarWrapper implements LogisticIndex {
         return Arrays.stream(str).anyMatch(m -> m.equals(car.getCarModel()));
     }
     private boolean notEqualsColor(String ...str){
-        return Arrays.stream(str).anyMatch(c -> !c.equals(car.getCarModel()));
+        return Arrays.stream(str).noneMatch(c -> c.equals(car.getColor()));
     }
 }
 

@@ -1,6 +1,8 @@
 package by.clevertec;
 
 import by.clevertec.model.Animal;
+import by.clevertec.model.Car;
+import by.clevertec.model.CarWrapper;
 import by.clevertec.model.Flower;
 import by.clevertec.model.House;
 import by.clevertec.model.Person;
@@ -20,12 +22,14 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 import static by.clevertec.Main.task13;
+import static by.clevertec.Main.task14;
 import static by.clevertec.Main.task15;
 import static by.clevertec.Main.task2;
 import static by.clevertec.Main.task21;
 import static by.clevertec.Main.task4;
 import static by.clevertec.Main.task5;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.offset;
 
 
 class MainTest {
@@ -93,9 +97,9 @@ class MainTest {
     @ParameterizedTest
     @MethodSource
     void GivenAnimals_WhenUsedTask5_ThenEqualsExpected(List<Animal> animals, boolean expected) {
-      boolean isHungarian = task5(animals);
+        boolean isHungarian = task5(animals);
 
-      assertThat(isHungarian).isEqualTo(expected);
+        assertThat(isHungarian).isEqualTo(expected);
     }
 
     private static Stream<Arguments> GivenAnimals_WhenUsedTask5_ThenEqualsExpected() {
@@ -148,7 +152,50 @@ class MainTest {
         );
     }
 
+    @Nested
+    class Task14 {
+        @ParameterizedTest
+        @MethodSource
+        void GivenCar_WhenGetLogisticIndex_ThenEqualsExpected(Car car, int expectedIndex) {
+            CarWrapper carWrapper = new CarWrapper(car);
 
+            int actualIndex = carWrapper.getIndex();
+
+            assertThat(actualIndex).isEqualTo(expectedIndex);
+        }
+
+        @ParameterizedTest
+        @MethodSource
+        void GivenCars_WhenTask14_ThenProfitEqualsExpected(List<Car> cars, double expectedProfit) {
+            double actualProfit = task14(cars);
+
+            assertThat(actualProfit).isEqualTo(expectedProfit, offset(0.001));
+        }
+
+        private static Stream<Arguments> GivenCars_WhenTask14_ThenProfitEqualsExpected() {
+            List<List<Car>> cars = UtilsTest.getCars();
+            return Stream.of(
+                    Arguments.of(cars.get(0), 127.95594d),
+                    Arguments.of(cars.get(1), 0d),
+                    Arguments.of(cars.get(2), 26.53224d)
+            );
+        }
+
+        private static Stream<Arguments> GivenCar_WhenGetLogisticIndex_ThenEqualsExpected() {
+            List<List<Car>> cars = UtilsTest.getCars();
+            return Stream.of(
+                    Arguments.of(cars.get(0).get(0), 0),
+                    Arguments.of(cars.get(0).get(1), 1),
+                    Arguments.of(cars.get(0).get(2), 2),
+                    Arguments.of(cars.get(0).get(3), 3),
+                    Arguments.of(cars.get(0).get(4), 4),
+                    Arguments.of(cars.get(0).get(5), 5),
+                    Arguments.of(cars.get(0).get(6), 6)
+            );
+        }
+
+
+    }
 
 
     @Nested

@@ -76,4 +76,12 @@ public class TaskUtil {
         return DAY_IN_YEAR * years * costWater / 1000;
     }
 
+    public static Function<Map<Country, Double>, Double> profitCalculationLogisticCompany(){
+        return map -> {
+            map.entrySet().forEach(System.out::println);
+            return map.values().stream()
+                    .mapToDouble(Double::doubleValue)
+                    .sum();
+        };
+    }
 }

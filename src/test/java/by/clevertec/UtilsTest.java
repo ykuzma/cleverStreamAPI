@@ -16,7 +16,7 @@ import java.util.List;
 public class UtilsTest {
     private static final String ANIMALS_TEST = "src/test/resources/json/AnimalsTest.json";
     private static final String RECRUITS_TEST = "src/test/resources/json/recruitsTest.json";
-    private static final String CARS_DATA_FILE = "src/test/resources/json/cars.json";
+    private static final String CARS_DATA_FILE = "src/test/resources/json/carsTest.json";
     private static final String FLOWERS_DATA_FILE = "src/test/resources/json/flowersTest.json";
     private static final String STUDENTS_DATA_FILE = "src/test/resources/json/studentsTest.json";
     private static final String EXAMINATION_DATA_FILE = "src/test/resources/json/examinations.json";
@@ -46,9 +46,15 @@ public class UtilsTest {
 
     }
 
-    public static List<Car> getCars() {
-        return reader.getModelData(CARS_DATA_FILE, new TypeReference<>() {
+    public static List<List<Car>> getCars() {
+        List<Car> cars = reader.getModelData(CARS_DATA_FILE, new TypeReference<>() {
         });
+        return List.of(
+                cars.subList(0,7),
+                cars.subList(6,7),
+                cars.subList(0,1)
+
+        );
     }
 
     public static List<List<Flower>> getFlowers() {
