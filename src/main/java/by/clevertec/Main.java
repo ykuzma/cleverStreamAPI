@@ -33,7 +33,7 @@ public class Main {
         task2(Util.getAnimals());
         task3();
         task4(Util.getAnimals());
-        task5();
+        task5(Util.getAnimals());
         task6();
         task7();
         task8();
@@ -94,11 +94,11 @@ public class Main {
         return count;
     }
 
-    public static void task5() {
-        List<Animal> animals = Util.getAnimals();
-        System.out.println(animals.stream()
+    public static boolean task5(List<Animal> animals) {
+
+        return animals.stream()
                 .filter(animal -> animal.getAge() > 19 && animal.getAge() < 31)
-                .anyMatch(TaskUtil.isOrigin("Hungarian")));
+                .anyMatch(TaskUtil.isOrigin("Hungarian"));
     }
 
     public static void task6() {

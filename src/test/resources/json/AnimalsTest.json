@@ -6,5 +6,20 @@
   {"id":7,"bread":"Southern boubou","age":45,"origin":"Sotho","gender":"Female"},
   {"id":8,"bread":"Starling, red-shouldered glossy","age":17,"origin":"Pashto","gender":"Male"},
   {"id":9,"bread":"Field flicker","age":34,"origin":"Catalan","gender":"Female"},
-  {"id":10,"bread":"jf","age":46,"origin":"Japanese","gender":"Female"}
+  {"id":10,"bread":"jf","age":46,"origin":"Japanese","gender":"Female"},
+
+  {"id":11,"bread":"Tern, arctic","age":38,"origin":"Hungarian","gender":"Male"},
+  {"id":12,"bread":"jf","age":18,"origin":"Hungarian","gender":"Female"},
+  {"id":13,"bread":"Legaan, Monitor (unidentified)","age":15,"origin":"Hungarian","gender":"Male"},
+
+  {"id":14,"bread":"Javan gold-spotted mongoose","age":33,"origin":"Kurdish","gender":"Male"},
+  {"id":15,"bread":"Southern boubou","age":45,"origin":"Sotho","gender":"Female"},
+  {"id":16,"bread":"Starling, red-shouldered glossy","age":17,"origin":"Pashto","gender":"Male"},
+
+  {"id":17,"bread":"Field flicker","age":24,"origin":"Hungarian","gender":"Female"},
+  {"id":18,"bread":"jf","age":46,"origin":"Japanese","gender":"Female"},
+
+  {"id":19,"bread":"Tern, arctic","age":28,"origin":"Hungarian","gender":"Male"},
+  {"id":20,"bread":"jf","age":28,"origin":"Hungarian","gender":"Female"},
+  {"id":21,"bread":"Legaan, Monitor (unidentified)","age":25,"origin":"Hungarian","gender":"Male"}
 ]

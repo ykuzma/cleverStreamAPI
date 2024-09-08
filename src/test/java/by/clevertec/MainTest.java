@@ -5,6 +5,7 @@ import by.clevertec.model.Flower;
 import by.clevertec.model.House;
 import by.clevertec.model.Person;
 import by.clevertec.model.PersonWithRangeEvacuation;
+import by.clevertec.model.Student;
 import by.clevertec.util.EvacuationRank;
 import by.clevertec.util.FlowerComparator;
 import org.junit.jupiter.api.Nested;
@@ -15,12 +16,15 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import static by.clevertec.Main.task13;
 import static by.clevertec.Main.task15;
 import static by.clevertec.Main.task2;
+import static by.clevertec.Main.task21;
 import static by.clevertec.Main.task4;
+import static by.clevertec.Main.task5;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -76,6 +80,36 @@ class MainTest {
         assertThat(count).isEqualTo(expected);
     }
 
+    private static Stream<Arguments> provideStartListAndExpectedCount() {
+        List<List<Animal>> animals = UtilsTest.getAnimals();
+        return Stream.of(
+                Arguments.of(animals.get(0), 1),
+                Arguments.of(animals.get(1), 1),
+                Arguments.of(animals.get(2), 4),
+                Arguments.of(animals.get(3), 0)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource
+    void GivenAnimals_WhenUsedTask5_ThenEqualsExpected(List<Animal> animals, boolean expected) {
+      boolean isHungarian = task5(animals);
+
+      assertThat(isHungarian).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> GivenAnimals_WhenUsedTask5_ThenEqualsExpected() {
+        List<List<Animal>> animals = UtilsTest.getAnimals();
+        return Stream.of(
+                Arguments.of(animals.get(4), false),
+                Arguments.of(animals.get(5), false),
+                Arguments.of(animals.get(6), true),
+                Arguments.of(animals.get(7), true)
+
+        );
+    }
+
+
     @Test
     void testTask13_GivenListHouses_WhenUsedStream_ThenSortedListPerson() {
         List<Person> persons = UtilsTest.getPersons();
@@ -115,15 +149,7 @@ class MainTest {
     }
 
 
-    private static Stream<Arguments> provideStartListAndExpectedCount() {
-        List<List<Animal>> animals = UtilsTest.getAnimals();
-        return Stream.of(
-                Arguments.of(animals.get(0), 1),
-                Arguments.of(animals.get(1), 1),
-                Arguments.of(animals.get(2), 4),
-                Arguments.of(animals.get(3), 0)
-        );
-    }
+
 
     @Nested
     class Task15 {
@@ -174,6 +200,20 @@ class MainTest {
                     Arguments.of(flowers.get(4), flowers.get(5))
             );
         }
+    }
+
+    @Test
+    void GivenStudents_WhenUsedTask21_ThenMapEqualsExpected() {
+        List<Student> students = UtilsTest.getStudents().get(0);
+        Map<String, Long> expected = Map.of(
+                "M-1", 2L,
+                "P-1", 1L,
+                "C-2", 3L
+        );
+
+        Map<String, Long> countingStudentsByGroup = task21(students);
+
+        assertThat(countingStudentsByGroup).isEqualTo(expected);
     }
 
 
