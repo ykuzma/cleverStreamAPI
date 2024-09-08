@@ -41,7 +41,7 @@ public class Main {
         task9();
         task10();
         task11();
-        task12();
+        task12(Util.getPersons());
         task13(Util.getHouses());
         task14(Util.getCars());
         task15(Util.getFlowers());
@@ -150,14 +150,15 @@ public class Main {
                 .orElseThrow());
     }
 
-    public static void task12() {
-        List<Person> persons = Util.getPersons();
-        persons.stream()
+    public static List<Person> task12(List<Person> persons) {
+
+        return persons.stream()
                 .filter(person -> person.getGender().equals("Male"))
                 .filter(TaskUtil.isAgeOlder(18).and(TaskUtil.isAgeYounger(27)))
                 .sorted(Comparator.comparingInt(Person::getRecruitmentGroup))
                 .limit(200)
-                .forEach(System.out::println);
+                .peek(System.out::println)
+                .toList();
     }
 
     public static List<Person> task13(List<House> houses) {

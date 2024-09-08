@@ -10,6 +10,7 @@ import by.clevertec.model.PersonWithRangeEvacuation;
 import by.clevertec.model.Student;
 import by.clevertec.util.EvacuationRank;
 import by.clevertec.util.FlowerComparator;
+import by.clevertec.util.TaskUtil;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -21,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import static by.clevertec.Main.task12;
 import static by.clevertec.Main.task13;
 import static by.clevertec.Main.task14;
 import static by.clevertec.Main.task15;
@@ -113,9 +115,47 @@ class MainTest {
         );
     }
 
+    @Nested
+    class Task12{
+        @ParameterizedTest
+        @MethodSource("providePersons")
+        void GivenPersons_WhenFiltered_ThenListContainsOnlyMale(List<Person>persons) {
 
-    @Test
-    void testTask13_GivenListHouses_WhenUsedStream_ThenSortedListPerson() {
+            List<Person> actualPersons = task12(persons);
+
+            assertThat(actualPersons)
+                    .filteredOn(person -> person.getGender().equals("Male"))
+                    .isEqualTo(actualPersons);
+
+        }
+
+        @ParameterizedTest
+        @MethodSource("providePersons")
+        void GivenPersons_WhenFiltered_ThenListContainsOnlyAgeBetween18and27(List<Person>persons) {
+
+            List<Person> actualPersons = task12(persons);
+
+            assertThat(actualPersons)
+                    .filteredOn(TaskUtil.isAgeYounger(27).and(TaskUtil.isAgeOlder(18)))
+                    .isEqualTo(actualPersons);
+
+        }
+
+        private static Stream<Arguments> providePersons() {
+            List<Person> persons = UtilsTest.getPersons();
+            return Stream.of(
+                    Arguments.of(persons.subList(3,6), 0),
+                    Arguments.of(persons.subList(6,9), 0),
+                    Arguments.of(persons.subList(9,12), 0),
+                    Arguments.of(persons.subList(3,15), 3)
+            );
+        }
+    }
+
+    @Nested
+    class Task13{
+        @Test
+        void testTask13_GivenListHouses_WhenUsedStream_ThenSortedListPerson () {
         List<Person> persons = UtilsTest.getPersons();
         List<House> houses = List.of(
                 new House(1, "Civil building", persons.subList(0, 1)),
@@ -133,16 +173,16 @@ class MainTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    @ParameterizedTest
-    @MethodSource("provideTestTask13EvacuationRankAndExpectedValue")
-    void testTask13_GivenEvacuationRank_WhenGetRank_ThenIntEqualsExpected(EvacuationRank wrapper, int expected) {
+        @ParameterizedTest
+        @MethodSource("provideTestTask13EvacuationRankAndExpectedValue")
+        void testTask13_GivenEvacuationRank_WhenGetRank_ThenIntEqualsExpected (EvacuationRank wrapper,int expected){
 
         int actual = wrapper.getRank();
 
         assertThat(actual).isEqualTo(expected);
     }
 
-    private static Stream<Arguments> provideTestTask13EvacuationRankAndExpectedValue() {
+        private static Stream<Arguments> provideTestTask13EvacuationRankAndExpectedValue () {
         List<Person> persons = UtilsTest.getPersons();
         return Stream.of(
                 Arguments.of(new PersonWithRangeEvacuation(persons.get(29), false), 2),
@@ -150,6 +190,7 @@ class MainTest {
                 Arguments.of(new PersonWithRangeEvacuation(persons.get(11), true), 0),
                 Arguments.of(new PersonWithRangeEvacuation(persons.get(5), false), 3)
         );
+    }
     }
 
     @Nested
