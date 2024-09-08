@@ -1,5 +1,6 @@
 package by.clevertec;
 
+import by.clevertec.exception.IOFileException;
 import by.clevertec.model.Animal;
 import by.clevertec.model.AnimalWrapper;
 import by.clevertec.model.Car;
@@ -17,13 +18,20 @@ import by.clevertec.util.LogisticIndex;
 import by.clevertec.util.TaskUtil;
 import by.clevertec.util.Util;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.Array;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 
+import static by.clevertec.util.TaskUtil.isMemberGroup;
+import static by.clevertec.util.TaskUtil.isThirdExamPassed;
 import static by.clevertec.util.TaskUtil.isVaseMaterialSuitable;
+import static by.clevertec.util.TaskUtil.mappingExaminationByStudentID;
 import static by.clevertec.util.TaskUtil.mappingFlowersInServiceCost;
 import static by.clevertec.util.TaskUtil.profitCalculationLogisticCompany;
 
@@ -48,7 +56,7 @@ public class Main {
         task16();
         task17();
         task18();
-        task19();
+        task19(Util.getStudents(), new BufferedReader(new InputStreamReader(System.in)));
         task20();
         task21(Util.getStudents());
         task22();
@@ -231,9 +239,17 @@ public class Main {
         System.out.println(collect);
     }
 
-    public static void task19() {
-        List<Student> students = Util.getStudents();
-//        students.stream() Продолжить ...
+    public static List<Student> task19(List<Student> students, BufferedReader bufferedReader) {
+
+        Map<Integer, Examination> examinations = mappingExaminationByStudentID(Util.getExaminations());
+        try (BufferedReader br = bufferedReader) {
+            return students.stream()
+                    .filter(isMemberGroup(br.readLine()))
+                    .filter(isThirdExamPassed(examinations))
+                    .toList();
+        }catch (IOException e) {
+            throw new IOFileException(e.getMessage());
+        }
     }
 
     public static void task20() {

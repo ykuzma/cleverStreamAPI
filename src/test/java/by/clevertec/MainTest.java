@@ -16,7 +16,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.Mockito;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +29,7 @@ import static by.clevertec.Main.task12;
 import static by.clevertec.Main.task13;
 import static by.clevertec.Main.task14;
 import static by.clevertec.Main.task15;
+import static by.clevertec.Main.task19;
 import static by.clevertec.Main.task2;
 import static by.clevertec.Main.task21;
 import static by.clevertec.Main.task4;
@@ -290,6 +294,52 @@ class MainTest {
         }
     }
 
+    @Nested
+    class Task19{
+        @ParameterizedTest
+        @MethodSource("providedStudentsAndGroup")
+        void GivenNotEmptyStudents_WhenTask19_ThenAllGroupMatchExpected (List<Student> students, String group) throws IOException {
+        BufferedReader br = Mockito.mock(BufferedReader.class);
+        Mockito.when(br.readLine()).thenReturn(group);
+
+        List<Student> actualStudents = task19(students, br);
+
+        assertThat(actualStudents).isNotEmpty().extracting(Student::getGroup).allMatch(s -> s.equals(group));
+    }
+
+        @ParameterizedTest
+        @MethodSource("providedStudentsAndGroupAndSize")
+        void GivenStudents_WhenTask19_ThenSizeEqualsExpected (List<Student> students, String group, int sizeExpected) throws IOException {
+            BufferedReader br = Mockito.mock(BufferedReader.class);
+            Mockito.when(br.readLine()).thenReturn(group);
+
+            List<Student> actualStudents = task19(students, br);
+
+            assertThat(actualStudents).hasSize(sizeExpected);
+        }
+
+        private static Stream<Arguments> providedStudentsAndGroup() {
+            List<List<Student>> students = UtilsTest.getStudents();
+            return Stream.of(
+                    Arguments.of(students.get(0), "C-2"),
+                    Arguments.of(students.get(0), "M-1"),
+                    Arguments.of(students.get(0), "P-1")
+
+            );
+        }
+
+        private static Stream<Arguments> providedStudentsAndGroupAndSize() {
+            List<List<Student>> students = UtilsTest.getStudents();
+            return Stream.of(
+                    Arguments.of(students.get(1), "C-2", 5),
+                    Arguments.of(students.get(1), "M-1", 3),
+                    Arguments.of(students.get(1), "P-1", 3),
+                    Arguments.of(students.get(1), "C-3", 2),
+                    Arguments.of(students.get(1), "y-1", 0)
+
+            );
+        }
+    }
     @Test
     void GivenStudents_WhenUsedTask21_ThenMapEqualsExpected() {
         List<Student> students = UtilsTest.getStudents().get(0);

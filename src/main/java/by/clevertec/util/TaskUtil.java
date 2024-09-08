@@ -25,7 +25,7 @@ public class TaskUtil {
     private static final int DAY_IN_YEAR = 365;
     private static int PENSION_AGE = 60;
 
-    public static int getPensionAge(){
+    public static int getPensionAge() {
         return PENSION_AGE;
     }
 
@@ -76,12 +76,36 @@ public class TaskUtil {
         return DAY_IN_YEAR * years * costWater / 1000;
     }
 
-    public static Function<Map<Country, Double>, Double> profitCalculationLogisticCompany(){
+    public static Function<Map<Country, Double>, Double> profitCalculationLogisticCompany() {
         return map -> {
             map.entrySet().forEach(System.out::println);
             return map.values().stream()
                     .mapToDouble(Double::doubleValue)
                     .sum();
+        };
+    }
+
+    public static Predicate<Student> isMemberGroup(String group) {
+        return student -> student.getGroup().equals(group);
+    }
+
+    public static Map<Integer, Examination> mappingExaminationByStudentID(List<Examination> examinations) {
+        return examinations.stream()
+                .collect(Collectors.toMap(
+                        Examination::getStudentId,
+                        examination -> examination
+                ));
+    }
+
+    public static Predicate<Student> isThirdExamPassed(Map<Integer, Examination> examinations) {
+
+        return student -> {
+            Examination exam = examinations.get(student.getId());
+            if (exam != null) {
+                return exam.getExam3() > 4;
+            } else {
+                return false;
+            }
         };
     }
 }
