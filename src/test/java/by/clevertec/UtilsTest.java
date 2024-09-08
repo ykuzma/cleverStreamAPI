@@ -18,7 +18,7 @@ public class UtilsTest {
     private static final String ANIMALS_TEST = "src/test/resources/json/AnimalsTest.json";
     private static final String RECRUITS_TEST = "src/test/resources/json/recruitsTest.json";
     private static final String CARS_DATA_FILE = "src/test/resources/json/cars.json";
-    private static final String FLOWERS_DATA_FILE = "src/test/resources/json/flowers.json";
+    private static final String FLOWERS_DATA_FILE = "src/test/resources/json/flowersTest.json";
     private static final String STUDENTS_DATA_FILE = "src/test/resources/json/students.json";
     private static final String EXAMINATION_DATA_FILE = "src/test/resources/json/examinations.json";
     private static final String BUILDING_TYPE_HOSPITAL = "Hospital";
@@ -48,9 +48,22 @@ public class UtilsTest {
         });
     }
 
-    public static List<Flower> getFlowers() {
-        return reader.getModelData(FLOWERS_DATA_FILE, new TypeReference<>() {
+    public static List<List<Flower>> getFlowers() {
+        List<Flower> flowers = reader.getModelData(FLOWERS_DATA_FILE, new TypeReference<>() {
         });
+
+        return List.of(
+                flowers.subList(0,3),
+                flowers.subList(3,6),
+                flowers.subList(6,9),
+                flowers.subList(9,12),
+                flowers.subList(12,15),
+                flowers.subList(15,18),
+                flowers.subList(18,21),
+                flowers.subList(21,24),
+                flowers.subList(24,27),
+                flowers.subList(27,30)
+        );
     }
 
     public static List<House> getHouses() {

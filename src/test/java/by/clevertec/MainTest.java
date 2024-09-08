@@ -1,20 +1,24 @@
 package by.clevertec;
 
 import by.clevertec.model.Animal;
+import by.clevertec.model.Flower;
 import by.clevertec.model.House;
 import by.clevertec.model.Person;
 import by.clevertec.model.PersonWithRangeEvacuation;
 import by.clevertec.util.EvacuationRank;
+import by.clevertec.util.FlowerComparator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Stream;
 
 import static by.clevertec.Main.task13;
+import static by.clevertec.Main.task15;
 import static by.clevertec.Main.task2;
 import static by.clevertec.Main.task4;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -111,8 +115,6 @@ class MainTest {
     }
 
 
-
-
     private static Stream<Arguments> provideStartListAndExpectedCount() {
         List<List<Animal>> animals = UtilsTest.getAnimals();
         return Stream.of(
@@ -123,7 +125,56 @@ class MainTest {
         );
     }
 
+    @Nested
+    class Task15 {
+        @ParameterizedTest
+        @MethodSource("provideStartedFlowersExpectedFlowers")
+        void GivenFlowers_WhenUsedComparator_ThenSortedSuccessful(List<Flower> started, List<Flower> expected) {
+            Comparator<Flower> comparator = new FlowerComparator();
 
+            started.sort(comparator);
+
+            assertThat(started).isEqualTo(expected);
+        }
+
+        @ParameterizedTest
+        @MethodSource("provideStartedFlowers")
+        void GivenFlowers_WhenFiltered_ThenSumZero(List<Flower> started) {
+
+            double actualSum = task15(started);
+
+            assertThat(actualSum).isZero();
+        }
+
+        @Test
+        void GivenFlowers_WhenUsedStream_ThenSumEqualsExpected() {
+            List<Flower> flowers = UtilsTest.getFlowers().get(1);
+
+            double actualSum = task15(flowers);
+
+            assertThat(actualSum).isEqualTo(102.53675);
+        }
+
+
+        private static Stream<Arguments> provideStartedFlowers() {
+            List<List<Flower>> flowers = UtilsTest.getFlowers();
+            return Stream.of(
+                    Arguments.of(flowers.get(6)),
+                    Arguments.of(flowers.get(7)),
+                    Arguments.of(flowers.get(8)),
+                    Arguments.of(flowers.get(9))
+            );
+        }
+
+        private static Stream<Arguments> provideStartedFlowersExpectedFlowers() {
+            List<List<Flower>> flowers = UtilsTest.getFlowers();
+            return Stream.of(
+                    Arguments.of(flowers.get(0), flowers.get(1)),
+                    Arguments.of(flowers.get(2), flowers.get(3)),
+                    Arguments.of(flowers.get(4), flowers.get(5))
+            );
+        }
+    }
 
 
 }

@@ -43,13 +43,13 @@ public class Main {
         task12();
         task13(Util.getHouses());
         task14();
-        task15();
+        task15(Util.getFlowers());
         task16();
         task17();
         task18();
         task19();
         task20();
-        task21();
+        task21(Util.getStudents());
         task22();
     }
 
@@ -188,9 +188,9 @@ public class Main {
                 );
     }
 
-    public static void task15() {
-        List<Flower> flowers = Util.getFlowers();
-        flowers.stream()
+    public static double task15(List<Flower> flowers) {
+
+        return flowers.stream()
                 .limit(100)
                 .sorted(new FlowerComparator())
                 .filter(flower -> flower.getCommonName().toCharArray()[0] >= 'C')
@@ -204,7 +204,7 @@ public class Main {
     public static void task16() {
         List<Student> students = Util.getStudents();
         students.stream()
-                .filter(s -> s.getAge() < 19)
+                .filter(s -> s.getAge() < 18)
                 .sorted(Comparator.comparing(Student::getSurname))
                 .forEach(n -> System.out.printf("%s - %s%n", n.getSurname(), n.getAge()));
 
@@ -250,15 +250,14 @@ public class Main {
                 );
     }
 
-    public static void task21() {
-        List<Student> students = Util.getStudents();
-        System.out.println(students.stream()
+    public static Map<String, Long> task21(List<Student> students) {
+        return students.stream()
                 .collect(
                         Collectors.groupingBy(
                                 Student::getGroup,
                                 Collectors.counting()
                         )
-                ));
+                );
     }
 
     public static void task22() {
