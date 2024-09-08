@@ -5,6 +5,7 @@ import by.clevertec.model.House;
 import by.clevertec.model.Person;
 import by.clevertec.model.PersonWithRangeEvacuation;
 import by.clevertec.util.EvacuationRank;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -21,33 +22,45 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class MainTest {
 
-    @ParameterizedTest
-    @MethodSource("provideTestTask2StartedAndExpectedList")
-    void testTask2_resultListEqualsExpected(List<Animal> animals, List<String> expected) {
+    @Nested
+    class Task2 {
+        @ParameterizedTest
+        @MethodSource("provideTestTask2StartedAndExpectedList")
+        void testTask2_resultListEqualsExpected(List<Animal> animals, List<String> expected) {
 
-        List<String> result = task2(animals);
+            List<String> result = task2(animals);
 
-        assertThat(result).isEqualTo(expected);
+            assertThat(result).isEqualTo(expected);
 
-    }
+        }
 
-    @Test
-    void testTask2_resultListSizeEqualsExpected() {
-        List<Animal> animals = UtilsTest.getAnimals().get(2);
+        @Test
+        void testTask2_resultListSizeEqualsExpected() {
+            List<Animal> animals = UtilsTest.getAnimals().get(2);
 
-        Integer result = task2(animals).size();
+            List<String> result = task2(animals);
 
-        assertThat(result).isEqualTo(2);
-    }
+            assertThat(result).hasSize(2);
+        }
 
-    @Test
-    void testTask2_allElementsIsUpperCase() {
-        List<Animal> animals = UtilsTest.getAnimals().get(2);
+        @Test
+        void testTask2_allElementsIsUpperCase() {
+            List<Animal> animals = UtilsTest.getAnimals().get(2);
 
-        List<String> result = task2(animals);
+            List<String> result = task2(animals);
 
-        assertThat(result.stream()
-                .allMatch(s -> s.equals(s.toUpperCase()))).isTrue();
+            assertThat(result.stream()
+                    .allMatch(s -> s.equals(s.toUpperCase()))).isTrue();
+        }
+
+        private static Stream<Arguments> provideTestTask2StartedAndExpectedList() {
+            List<List<Animal>> animals = UtilsTest.getAnimals();
+            return Stream.of(
+                    Arguments.of(animals.get(0), List.of("JF")),
+                    Arguments.of(animals.get(1), List.of()),
+                    Arguments.of(animals.get(2), List.of("JF", "JF"))
+            );
+        }
     }
 
     @ParameterizedTest
@@ -65,8 +78,8 @@ class MainTest {
         List<House> houses = List.of(
                 new House(1, "Civil building", persons.subList(0, 1)),
                 new House(2, "Civil building", persons.subList(1, 2)),
-                new House(3 , "Hospital", persons.subList(2,3))
-                );
+                new House(3, "Hospital", persons.subList(2, 3))
+        );
         List<Person> expected = List.of(
                 persons.get(2),
                 persons.get(1),
@@ -98,14 +111,7 @@ class MainTest {
     }
 
 
-    private static Stream<Arguments> provideTestTask2StartedAndExpectedList() {
-        List<List<Animal>> animals = UtilsTest.getAnimals();
-        return Stream.of(
-                Arguments.of(animals.get(0), List.of("JF")),
-                Arguments.of(animals.get(1), List.of()),
-                Arguments.of(animals.get(2), List.of("JF", "JF"))
-        );
-    }
+
 
     private static Stream<Arguments> provideStartListAndExpectedCount() {
         List<List<Animal>> animals = UtilsTest.getAnimals();
@@ -116,5 +122,8 @@ class MainTest {
                 Arguments.of(animals.get(3), 0)
         );
     }
+
+
+
 
 }

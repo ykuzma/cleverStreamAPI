@@ -181,7 +181,7 @@ public class Main {
                         Collectors.groupingBy(
                                 s -> Country.values()[s.getIndex()],
                                 Collectors.mapping(
-                                        s -> s.getCar().getMass() * 7.14,
+                                        s -> s.getCar().getMass() * 7.14 / 1000,
                                         Collectors.summingDouble(Double::doubleValue)
                                 )
                         )
