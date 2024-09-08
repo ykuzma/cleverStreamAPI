@@ -25,12 +25,15 @@ import java.lang.reflect.Array;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 import java.util.stream.Collectors;
 
+import static by.clevertec.util.TaskUtil.houseToPerson;
+import static by.clevertec.util.TaskUtil.isFemale;
+import static by.clevertec.util.TaskUtil.isMale;
 import static by.clevertec.util.TaskUtil.isMemberGroup;
 import static by.clevertec.util.TaskUtil.isThirdExamPassed;
 import static by.clevertec.util.TaskUtil.isVaseMaterialSuitable;
+import static by.clevertec.util.TaskUtil.mappingCarInTransportationCosts;
 import static by.clevertec.util.TaskUtil.mappingExaminationByStudentID;
 import static by.clevertec.util.TaskUtil.mappingFlowersInServiceCost;
 import static by.clevertec.util.TaskUtil.profitCalculationLogisticCompany;
@@ -80,7 +83,7 @@ public class Main {
         return animals.stream()
                 .filter(TaskUtil.isOrigin("Japanese"))
                 .peek(animal -> animal.setBread(animal.getBread().toUpperCase()))
-                .filter(TaskUtil.isFemale)
+                .filter(isFemale())
                 .map(Animal::getBread)
                 .peek(System.out::println)
                 .toList();
@@ -88,7 +91,8 @@ public class Main {
 
     public static void task3() {
         List<Animal> animals = Util.getAnimals();
-        animals.stream().filter(animal -> animal.getAge() > 30)
+        animals.stream()
+                .filter(animal -> animal.getAge() > 30)
                 .map(Animal::getOrigin)
                 .filter(s -> s.startsWith("A"))
                 .distinct()
@@ -97,7 +101,7 @@ public class Main {
 
     public static long task4(List<Animal> animals) {
         long count = animals.stream()
-                .filter(TaskUtil.isFemale)
+                .filter(isFemale())
                 .count();
         System.out.println(count);
         return count;
@@ -113,7 +117,7 @@ public class Main {
     public static void task6() {
         List<Animal> animals = Util.getAnimals();
         System.out.println(animals.stream()
-                .allMatch(TaskUtil.isFemale.or(TaskUtil.isMale)));
+                .allMatch(isFemale().or(isMale())));
     }
 
     public static void task7() {
@@ -172,7 +176,7 @@ public class Main {
     public static List<Person> task13(List<House> houses) {
 
         return houses.stream()
-                .flatMap(TaskUtil.houseToPerson)
+                .flatMap(houseToPerson())
                 .sorted(Comparator.comparing(EvacuationRank::getRank))
                 .limit(50)
                 .map(PersonWithRangeEvacuation::getPerson)
@@ -191,9 +195,10 @@ public class Main {
                                 Collectors.groupingBy(
                                         s -> Country.values()[s.getIndex()],
                                         Collectors.mapping(
-                                                s -> s.getCar().getMass() * 7.14 / 1000,
+                                                mappingCarInTransportationCosts(),
                                                 Collectors.summingDouble(Double::doubleValue)
-                                        )), profitCalculationLogisticCompany()
+                                        )),
+                                profitCalculationLogisticCompany()
                         )
                 );
     }
@@ -247,22 +252,22 @@ public class Main {
                     .filter(isMemberGroup(br.readLine()))
                     .filter(isThirdExamPassed(examinations))
                     .toList();
-        }catch (IOException e) {
+        } catch (IOException e) {
             throw new IOFileException(e.getMessage());
         }
     }
 
     public static void task20() {
         List<Student> students = Util.getStudents();
-        List<Examination> examinations = Util.getExaminations();
+        Map<Integer, Examination> examinations = mappingExaminationByStudentID(Util.getExaminations());
         students.stream()
                 .limit(20)
                 .collect(
                         Collectors.groupingBy(
                                 Student::getFaculty,
                                 Collectors.mapping(
-                                        TaskUtil.mapStudentToExam(Util.getExaminations()),
-                                        Collectors.toList()
+                                        TaskUtil.mapStudentToExam(examinations),
+                                        Collectors.averagingDouble(Integer::doubleValue)
                                 )
                         )
                 );

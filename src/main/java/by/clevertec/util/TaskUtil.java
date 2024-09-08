@@ -1,6 +1,7 @@
 package by.clevertec.util;
 
 import by.clevertec.model.Animal;
+import by.clevertec.model.CarWrapper;
 import by.clevertec.model.Examination;
 import by.clevertec.model.Flower;
 import by.clevertec.model.House;
@@ -15,24 +16,31 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.function.Supplier;
 import java.util.function.ToDoubleFunction;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class TaskUtil {
 
+    private TaskUtil(){
+
+    }
+
     private static final int DAY_IN_YEAR = 365;
-    private static int PENSION_AGE = 60;
+    private static final double TRANSPORTATION_COST = 7.14;
+    private static final int PENSION_AGE = 60;
 
     public static int getPensionAge() {
         return PENSION_AGE;
     }
 
-    public static Supplier<String> orElse = () -> "Empty Stream";
 
-    public static Predicate<Animal> isMale = animal -> animal.getGender().equals("Male");
-    public static Predicate<Animal> isFemale = animal -> animal.getGender().equals("Female");
+    public static Predicate<Animal> isMale() {
+        return animal -> animal.getGender().equals("Male");
+    }
+    public static Predicate<Animal> isFemale()  {
+       return animal -> animal.getGender().equals("Female");
+    }
 
     public static Predicate<Animal> isOrigin(String country) {
         return animal -> animal.getOrigin().equals(country);
@@ -46,20 +54,20 @@ public class TaskUtil {
         return person -> Period.between(person.getDateOfBirth(), LocalDate.now()).getYears() <= age;
     }
 
-    public static Function<House, Stream<PersonWithRangeEvacuation>> houseToPerson = house -> {
-        boolean isInHospital = house.getBuildingType().equals("Hospital");
-        return house.getPersonList().stream()
-                .map(person -> new PersonWithRangeEvacuation(person, isInHospital));
-    };
+    public static Function<House, Stream<PersonWithRangeEvacuation>> houseToPerson() {
+        return house -> {
+            boolean isInHospital = house.getBuildingType().equals("Hospital");
+            return house.getPersonList().stream()
+                    .map(person -> new PersonWithRangeEvacuation(person, isInHospital));
+        };
+    }
 
-    public static Function<Student, Integer> mapStudentToExam(List<Examination> examinations) {
+    public static Function<Student, Integer> mapStudentToExam(Map<Integer, Examination> examinations) throws IllegalArgumentException {
         return student -> {
-            Map<Integer, Integer> examinationsMap = examinations.stream()
-                    .collect(Collectors.toMap(
-                            Examination::getStudentId,
-                            Examination::getExam1
-                    ));
-            return examinationsMap.get(student.getId());
+           Examination examination = examinations.get(student.getId());
+           if(examination == null) throw new IllegalArgumentException();
+
+           return examination.getExam1();
         };
     }
 
@@ -83,6 +91,10 @@ public class TaskUtil {
                     .mapToDouble(Double::doubleValue)
                     .sum();
         };
+    }
+
+    public static Function<CarWrapper, Double> mappingCarInTransportationCosts() {
+        return s -> s.getCar().getMass() * TRANSPORTATION_COST / 1000;
     }
 
     public static Predicate<Student> isMemberGroup(String group) {
