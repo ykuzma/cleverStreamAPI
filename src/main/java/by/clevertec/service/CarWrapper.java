@@ -1,7 +1,6 @@
 package by.clevertec.service;
 
 import by.clevertec.model.Car;
-import by.clevertec.service.LogisticIndex;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

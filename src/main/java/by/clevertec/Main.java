@@ -29,6 +29,7 @@ import java.util.stream.Collectors;
 
 import static by.clevertec.util.TaskUtil.getCollector;
 import static by.clevertec.util.TaskUtil.getFacultyWithMaxAverageScore;
+import static by.clevertec.util.TaskUtil.getSortedFacultyByAverageAge;
 import static by.clevertec.util.TaskUtil.houseToPerson;
 import static by.clevertec.util.TaskUtil.isFemale;
 import static by.clevertec.util.TaskUtil.isMale;
@@ -238,13 +239,13 @@ public class Main {
 
     public static void task18() {
         List<Student> students = Util.getStudents();
-        Integer collect = students.stream()
+        System.out.println(students.stream()
                 .collect(Collectors.collectingAndThen(
                         Collectors.groupingBy(
                                 Student::getFaculty,
                                 Collectors.averagingDouble(Student::getAge)
-                        ), Map::size));
-        System.out.println(collect);
+                        ), getSortedFacultyByAverageAge())));
+
     }
 
     public static List<Student> task19(List<Student> students, BufferedReader bufferedReader) {

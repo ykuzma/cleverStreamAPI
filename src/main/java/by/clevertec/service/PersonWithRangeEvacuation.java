@@ -2,7 +2,6 @@ package by.clevertec.service;
 
 
 import by.clevertec.model.Person;
-import by.clevertec.service.EvacuationRank;
 import by.clevertec.util.TaskUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -15,6 +15,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.ToDoubleFunction;
@@ -122,7 +123,15 @@ public class TaskUtil {
             }
         };
     }
-    private Comparator<Map.Entry<String, Double>> valueComparator = (a,b) -> a.getValue().compareTo(b.getValue());
+    public static Function<Map<String, Double>, Set<Map.Entry<String, Double>>> getSortedFacultyByAverageAge(){
+        return m -> {
+            Set<Map.Entry<String, Double>> sortedSet = new TreeSet<>(valueComparator.reversed());
+            sortedSet.addAll(m.entrySet());
+            return sortedSet;
+        };
+    }
+
+    private static Comparator<Map.Entry<String, Double>> valueComparator = Map.Entry.comparingByValue();
 
     public static Function<Map<String, Double>, String> getFacultyWithMaxAverageScore(){
         return m ->  m.entrySet().stream()
