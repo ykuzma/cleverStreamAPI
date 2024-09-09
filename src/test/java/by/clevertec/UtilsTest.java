@@ -2,7 +2,6 @@ package by.clevertec;
 
 import by.clevertec.model.Animal;
 import by.clevertec.model.Car;
-import by.clevertec.model.Examination;
 import by.clevertec.model.Flower;
 import by.clevertec.model.Person;
 import by.clevertec.model.Student;
@@ -18,7 +17,6 @@ public class UtilsTest {
     private static final String CARS_DATA_FILE = "src/test/resources/json/carsTest.json";
     private static final String FLOWERS_DATA_FILE = "src/test/resources/json/flowersTest.json";
     private static final String STUDENTS_DATA_FILE = "src/test/resources/json/studentsTest.json";
-    private static final String EXAMINATION_DATA_FILE = "src/test/resources/json/examinations.json";
 
     private static final Reader reader = new JsonReader();
 
@@ -33,7 +31,9 @@ public class UtilsTest {
                 animals.subList(9,12),
                 animals.subList(12,15),
                 animals.subList(9, 17),
-                animals.subList(17,20)
+                animals.subList(17,20),
+                animals.subList(0, 33),
+                animals.subList(0, 37)
         );
     }
 
@@ -83,9 +83,5 @@ public class UtilsTest {
         );
     }
 
-    public static List<Examination> getExaminations() {
-        return reader.getModelData(EXAMINATION_DATA_FILE, new TypeReference<>() {
-        });
-    }
 }
 

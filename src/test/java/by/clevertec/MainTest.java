@@ -1,6 +1,7 @@
 package by.clevertec;
 
 import by.clevertec.model.Animal;
+import by.clevertec.model.AnimalWrapper;
 import by.clevertec.model.Car;
 import by.clevertec.model.CarWrapper;
 import by.clevertec.model.Flower;
@@ -12,6 +13,7 @@ import by.clevertec.util.EvacuationRank;
 import by.clevertec.util.FlowerComparator;
 import by.clevertec.util.TaskUtil;
 import by.clevertec.util.Util;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -26,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import static by.clevertec.Main.task1;
 import static by.clevertec.Main.task12;
 import static by.clevertec.Main.task13;
 import static by.clevertec.Main.task14;
@@ -43,6 +46,54 @@ import static org.assertj.core.api.Assertions.offset;
 
 
 class MainTest {
+    @Nested
+    class Task1 {
+
+        @BeforeEach
+        void resetCounter(){
+            AnimalWrapper.setCapacityZoo(7);
+            AnimalWrapper.setCounter(1);
+        }
+
+        @ParameterizedTest
+        @MethodSource("provideAnimalsAndExpectedSize")
+        void GivenAnimals_WhenGetAnimalsFromThirdZoo_ThenSizeEqualsExpected(List<Animal> animals, int sizeExpected){
+
+            List<Animal> actual = task1(animals);
+
+            assertThat(actual).hasSize(sizeExpected);
+        }
+
+        @ParameterizedTest
+        @MethodSource("provideAnimals")
+        void GivenAnimals_WhenGetAnimalsFromThirdZoo_ThenAllAgeBetween10And20(List<Animal> animals){
+
+            List<Animal> actual = task1(animals);
+
+            assertThat(actual).filteredOn(animal -> animal.getAge() > 9)
+                    .filteredOn(animal -> animal.getAge() < 21)
+                    .isEqualTo(actual);
+        }
+
+        private static Stream<Arguments> provideAnimalsAndExpectedSize() {
+            List<List<Animal>> animals = UtilsTest.getAnimals();
+            return Stream.of(
+                    Arguments.of(animals.get(0), 0),
+                    Arguments.of(animals.get(8), 3),
+                    Arguments.of(animals.get(9), 7)
+            );
+        }
+
+        private static Stream<Arguments> provideAnimals() {
+            List<List<Animal>> animals = UtilsTest.getAnimals();
+            return Stream.of(
+                    Arguments.of(animals.get(0)),
+                    Arguments.of(animals.get(8)),
+                    Arguments.of(animals.get(9))
+            );
+        }
+
+    }
 
     @Nested
     class Task2 {
@@ -85,16 +136,18 @@ class MainTest {
         }
     }
 
-    @ParameterizedTest
-    @MethodSource("provideStartListAndExpectedCount")
-    void testTask4_countEqualsExpected(List<Animal> animals, long expected) {
+    @Nested
+    class Task4 {
+        @ParameterizedTest
+        @MethodSource("provideStartListAndExpectedCount")
+        void testTask4_countEqualsExpected (List < Animal > animals,long expected){
 
         Long count = task4(animals);
 
         assertThat(count).isEqualTo(expected);
     }
 
-    private static Stream<Arguments> provideStartListAndExpectedCount() {
+        private static Stream<Arguments> provideStartListAndExpectedCount () {
         List<List<Animal>> animals = UtilsTest.getAnimals();
         return Stream.of(
                 Arguments.of(animals.get(0), 1),
@@ -103,16 +156,19 @@ class MainTest {
                 Arguments.of(animals.get(3), 0)
         );
     }
+    }
 
-    @ParameterizedTest
-    @MethodSource
-    void GivenAnimals_WhenUsedTask5_ThenEqualsExpected(List<Animal> animals, boolean expected) {
+    @Nested
+    class Task5{
+        @ParameterizedTest
+        @MethodSource
+        void GivenAnimals_WhenUsedTask5_ThenEqualsExpected (List < Animal > animals,boolean expected){
         boolean isHungarian = task5(animals);
 
         assertThat(isHungarian).isEqualTo(expected);
     }
 
-    private static Stream<Arguments> GivenAnimals_WhenUsedTask5_ThenEqualsExpected() {
+        private static Stream<Arguments> GivenAnimals_WhenUsedTask5_ThenEqualsExpected () {
         List<List<Animal>> animals = UtilsTest.getAnimals();
         return Stream.of(
                 Arguments.of(animals.get(4), false),
@@ -121,6 +177,7 @@ class MainTest {
                 Arguments.of(animals.get(7), true)
 
         );
+    }
     }
 
     @Nested

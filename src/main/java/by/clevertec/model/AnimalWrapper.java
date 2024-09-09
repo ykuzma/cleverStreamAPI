@@ -25,4 +25,12 @@ public class AnimalWrapper {
         return new AnimalWrapper(animal, counter);
     }
 
+    public static void setCounter(int newCounter){
+       counter = newCounter;
+    }
+
+    public static void setCapacityZoo(int newCapacityZoo){
+        capacityZoo = newCapacityZoo;
+    }
+
 }

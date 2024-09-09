@@ -21,5 +21,28 @@
 
   {"id":19,"bread":"Tern, arctic","age":28,"origin":"Hungarian","gender":"Male"},
   {"id":20,"bread":"jf","age":28,"origin":"Hungarian","gender":"Female"},
-  {"id":21,"bread":"Legaan, Monitor (unidentified)","age":25,"origin":"Hungarian","gender":"Male"}
+  {"id":21,"bread":"Legaan, Monitor (unidentified)","age":25,"origin":"Hungarian","gender":"Male"},
+  {"id":22,"bread":"Southern boubou","age":45,"origin":"Sotho","gender":"Female"},
+  {"id":23,"bread":"Starling, red-shouldered glossy","age":17,"origin":"Pashto","gender":"Male"},
+  {"id":24,"bread":"Field flicker","age":34,"origin":"Catalan","gender":"Female"},
+  {"id":25,"bread":"Javan gold-spotted mongoose","age":13,"origin":"Kurdish","gender":"Male"},
+  {"id":26,"bread":"Southern boubou","age":15,"origin":"Sotho","gender":"Female"},
+  {"id":27,"bread":"Starling, red-shouldered glossy","age":17,"origin":"Pashto","gender":"Male"},
+
+  {"id":28,"bread":"Field flicker","age":14,"origin":"Hungarian","gender":"Female"},
+  {"id":29,"bread":"jf","age":16,"origin":"Japanese","gender":"Female"},
+
+  {"id":30,"bread":"Tern, arctic","age":18,"origin":"Hungarian","gender":"Male"},
+  {"id":31,"bread":"jf","age":18,"origin":"Hungarian","gender":"Female"},
+  {"id":32,"bread":"Legaan, Monitor (unidentified)","age":15,"origin":"Hungarian","gender":"Male"},
+  {"id":33,"bread":"Southern boubou","age":15,"origin":"Sotho","gender":"Female"},
+  {"id":34,"bread":"Starling, red-shouldered glossy","age":17,"origin":"Pashto","gender":"Male"},
+  {"id":35,"bread":"Field flicker","age":14,"origin":"Catalan","gender":"Female"},
+
+  {"id":36,"bread":"Tern, arctic","age":18,"origin":"Hungarian","gender":"Male"},
+  {"id":37,"bread":"jf","age":18,"origin":"Hungarian","gender":"Female"},
+  {"id":38,"bread":"Legaan, Monitor (unidentified)","age":15,"origin":"Hungarian","gender":"Male"},
+  {"id":39,"bread":"Southern boubou","age":15,"origin":"Sotho","gender":"Female"},
+  {"id":40,"bread":"Starling, red-shouldered glossy","age":17,"origin":"Pashto","gender":"Male"},
+  {"id":41,"bread":"Field flicker","age":14,"origin":"Catalan","gender":"Female"}
 ]

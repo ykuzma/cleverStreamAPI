@@ -20,6 +20,7 @@ import by.clevertec.util.Util;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.Array;
 import java.util.Comparator;
 import java.util.List;
@@ -42,7 +43,7 @@ import static by.clevertec.util.TaskUtil.profitCalculationLogisticCompany;
 public class Main {
 
     public static void main(String[] args) {
-        task1();
+        task1(Util.getAnimals());
         task2(Util.getAnimals());
         task3();
         task4(Util.getAnimals());
@@ -60,21 +61,22 @@ public class Main {
         task16();
         task17();
         task18();
-      /*  task19(Util.getStudents(), new BufferedReader(new InputStreamReader(System.in)));*/
+        task19(Util.getStudents(), new BufferedReader(new InputStreamReader(System.in)));
         task20(Util.getStudents());
         task21(Util.getStudents());
         task22();
     }
 
-    public static void task1() {
-        List<Animal> animals = Util.getAnimals();
-        animals.stream()
+    public static List<Animal> task1(List<Animal> animals) {
+
+        return animals.stream()
                 .filter(animal -> animal.getAge() > 9 && animal.getAge() < 21)
                 .sorted(Comparator.comparingInt(Animal::getAge))
                 .map(AnimalWrapper::createAnimalWrapper)
                 .filter(animal -> animal.getNumberZoo() == 3)
                 .map(AnimalWrapper::getAnimal)
-                .forEach(System.out::println);
+                .peek(System.out::println)
+                .toList();
 
 
     }
