@@ -1,15 +1,15 @@
 package by.clevertec;
 
 import by.clevertec.model.Animal;
-import by.clevertec.model.AnimalWrapper;
+import by.clevertec.service.AnimalWrapper;
 import by.clevertec.model.Car;
-import by.clevertec.model.CarWrapper;
+import by.clevertec.service.CarWrapper;
 import by.clevertec.model.Flower;
 import by.clevertec.model.House;
 import by.clevertec.model.Person;
-import by.clevertec.model.PersonWithRangeEvacuation;
+import by.clevertec.service.PersonWithRangeEvacuation;
 import by.clevertec.model.Student;
-import by.clevertec.util.EvacuationRank;
+import by.clevertec.service.EvacuationRank;
 import by.clevertec.util.FlowerComparator;
 import by.clevertec.util.TaskUtil;
 import by.clevertec.util.Util;

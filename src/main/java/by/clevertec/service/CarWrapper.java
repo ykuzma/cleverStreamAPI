@@ -1,11 +1,11 @@
-package by.clevertec.model;
+package by.clevertec.service;
 
-import by.clevertec.util.LogisticIndex;
+import by.clevertec.model.Car;
+import by.clevertec.service.LogisticIndex;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 @Data

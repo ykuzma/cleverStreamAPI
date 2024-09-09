@@ -1,5 +1,6 @@
-package by.clevertec.model;
+package by.clevertec.service;
 
+import by.clevertec.model.Animal;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

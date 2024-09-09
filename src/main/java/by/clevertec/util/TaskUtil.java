@@ -1,18 +1,17 @@
 package by.clevertec.util;
 
 import by.clevertec.model.Animal;
-import by.clevertec.model.CarWrapper;
+import by.clevertec.service.CarWrapper;
 import by.clevertec.model.Examination;
 import by.clevertec.model.Flower;
 import by.clevertec.model.House;
 import by.clevertec.model.Person;
-import by.clevertec.model.PersonWithRangeEvacuation;
+import by.clevertec.service.PersonWithRangeEvacuation;
 import by.clevertec.model.Student;
 
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;

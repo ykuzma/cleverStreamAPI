@@ -1,4 +1,4 @@
-package by.clevertec.util;
+package by.clevertec.service;
 
 public interface LogisticIndex {
 
